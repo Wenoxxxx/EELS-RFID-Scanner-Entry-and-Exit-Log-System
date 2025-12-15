@@ -1,0 +1,50 @@
+.header {
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 24px;
+  margin: 0 auto;
+
+  max-width: 2000px;
+  width: calc(100% - 40px);
+  height: 90px;
+
+  background: linear-gradient(95deg, #0b0481, #00bccd);
+  border-radius: 16px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.15);
+  color: white;
+
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.nav-btn:hover {
+  background: rgba(255,255,255,0.3);
+  transform: translateY(-1px);
+}
