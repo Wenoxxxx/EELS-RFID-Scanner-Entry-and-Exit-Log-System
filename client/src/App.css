@@ -1,42 +1,88 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+* { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { margin: 0; background: #f5f7fb; }
+
+
+.app-layout { display: flex; height: 100vh; }
+
+
+.sidebar {
+width: 220px;
+background: #fff;
+padding: 20px;
+box-shadow: 2px 0 10px rgba(0,0,0,.05);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+.sidebar nav a {
+display: block;
+padding: 10px;
+margin-bottom: 6px;
+color: #555;
+text-decoration: none;
+border-radius: 8px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+.sidebar nav a.active,
+.sidebar nav a:hover {
+background: #4f46e5;
+color: white;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+
+.main-area { flex: 1; display: flex; flex-direction: column; }
+
+
+.header {
+padding: 16px 24px;
+background: white;
+display: flex;
+justify-content: space-between;
+align-items: center;
+box-shadow: 0 2px 10px rgba(0,0,0,.04);
 }
+
+
+.search {
+padding: 8px 12px;
+border-radius: 8px;
+border: 1px solid #ddd;
+}
+
+
+.content { padding: 24px; }
+
+
+.dashboard { display: grid; gap: 24px; }
+
+
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+gap: 16px;
+}
+
 
 .card {
-  padding: 2em;
+background: white;
+padding: 20px;
+border-radius: 16px;
+box-shadow: 0 8px 30px rgba(0,0,0,.05);
 }
 
-.read-the-docs {
-  color: #888;
+
+.card-title { color: #777; font-size: 14px; }
+
+
+.chart-placeholder {
+height: 220px;
+display: flex;
+align-items: center;
+justify-content: center;
+color: #999;
 }
+
+
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { padding: 12px; text-align: left; }
+.table tr:not(:last-child) { border-bottom: 1px solid #eee; }
