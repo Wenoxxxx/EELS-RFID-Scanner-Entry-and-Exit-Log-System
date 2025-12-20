@@ -1,34 +1,49 @@
-# Node
+# ======================
+# Node / Package Managers
+# ======================
 node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# ======================
 # Build outputs
+# ======================
 dist/
 build/
 .cache/
 .vite/
 coverage/
 
-# Environment files
+# ======================
+# Environment variables
+# ======================
 .env
 .env.local
 .env.*.local
 
+# ======================
 # System junk
+# ======================
 .DS_Store
 Thumbs.db
 
-# IDE/editor stuff
+# ======================
+# IDE / Editor files
+# ======================
 .vscode/
 .idea/
 *.swp
 
+# ======================
 # Logs
-logs
+# ======================
+logs/
 *.log
 
-# Database files
+# ======================
+# Database files (SQLite)
+# ======================
+*.db
 *.sqlite
-.db
+*.sqlite3
