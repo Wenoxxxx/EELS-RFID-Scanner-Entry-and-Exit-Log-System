@@ -1,5 +1,7 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import "./Logs.css";
+import { setScanMode } from "../api/rfid";
+
 
 export default function Logs() {
   const location = useLocation();
@@ -16,7 +18,7 @@ export default function Logs() {
       <h1>Logs</h1>
       <p className="subtitle">Timeline scanner logs</p>
 
-      {/* ✅ NON-CLICKABLE STATUS LABEL */}
+      {/* NON-CLICKABLE STATUS LABEL */}
       <p className={`logs-filter-label ${currentView.toLowerCase()}`}>
         SHOWING: {currentView} LOGS
       </p>
@@ -26,6 +28,7 @@ export default function Logs() {
         <div className="scan-actions">
           <NavLink
             to="in"
+            onClick={() => setScanMode("IN")}
             className={({ isActive }) =>
               `btn-scan in ${isActive ? "active" : ""}`
             }
@@ -35,6 +38,7 @@ export default function Logs() {
 
           <NavLink
             to="out"
+            onClick={() => setScanMode("OUT")}
             className={({ isActive }) =>
               `btn-scan out ${isActive ? "active" : ""}`
             }

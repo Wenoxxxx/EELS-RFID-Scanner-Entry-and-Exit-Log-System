@@ -1,3 +1,4 @@
+import './WeeklyLineChart.css';
 import {
   LineChart,
   Line,
@@ -8,7 +9,7 @@ import {
   ResponsiveContainer
 } from "recharts";
 
-// same data you already use on Dashboard
+// Weekly activity data
 const weeklyData = [
   { day: "Mon", Total: 120 },
   { day: "Tue", Total: 210 },
@@ -21,7 +22,7 @@ const weeklyData = [
 
 export default function WeeklyLineChart() {
   return (
-    <div className="chart-wrapper weekly-chart">
+    <div className="weekly-line-chart">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={weeklyData}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -34,6 +35,7 @@ export default function WeeklyLineChart() {
             stroke="#5b5be0"
             strokeWidth={3}
             dot={{ r: 5 }}
+            activeDot={{ r: 7 }}
           />
         </LineChart>
       </ResponsiveContainer>

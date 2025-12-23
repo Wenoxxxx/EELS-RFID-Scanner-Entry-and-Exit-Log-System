@@ -1,0 +1,38 @@
+/* ===== WEEKLY LINE CHART CONTAINER ===== */
+.weekly-line-chart {
+  width: 100%;
+  height: 260px;              /* REQUIRED for Recharts */
+  
+  padding: 8px 4px;
+  box-sizing: border-box;
+}
+
+/* ===== OPTIONAL: CHART CARD CONTEXT ===== */
+/* If this chart is inside a card */
+.card .weekly-line-chart {
+  height: 280px;
+}
+
+/* ===== TOOLTIP POLISH (optional but classy) ===== */
+.recharts-tooltip-wrapper {
+  outline: none;
+}
+
+.recharts-default-tooltip {
+  background: white !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: 0 10px 30px rgba(0,0,0,.12);
+  font-size: 13px;
+}
+
+/* ===== AXIS TEXT ===== */
+.recharts-cartesian-axis-tick text {
+  fill: #6b7280; /* soft gray */
+  font-size: 12px;
+}
+
+/* ===== GRID LINES ===== */
+.recharts-cartesian-grid line {
+  stroke: #e5e7eb;
+}

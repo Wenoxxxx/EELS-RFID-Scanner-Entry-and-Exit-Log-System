@@ -14,8 +14,6 @@
   margin-bottom: 24px;
 }
 
-
-
 /* Controls */
 .stats-controls {
   display: flex;
@@ -68,7 +66,7 @@
   margin-bottom: 12px;
 }
 
-/* Top stat cards grid (reused from dashboard) */
+/* Top stat cards grid */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -89,6 +87,17 @@
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+  position: relative; /* added for chart stability */
+}
+
+/* ============================= */
+/* CHART FIX (IMPORTANT PART)   */
+/* ============================= */
+
+.chart-wrapper {
+  width: 100%;
+  height: 300px;        /* 👈 THIS FIXES THE WARNING */
+  margin-top: 12px;
 }
 
 /* Full-width sections (Timeline) */
