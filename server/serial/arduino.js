@@ -12,7 +12,7 @@ const SCAN_MODE = "IN"; // "IN" | "OUT"
 // SERIAL PORT SETUP
 // ======================
 const port = new SerialPort({
-  path: "COM5",      // ✅ confirm in Device Manager
+  path: "COM5",      // confirm in Device Manager
   baudRate: 9600,
 });
 
@@ -43,7 +43,7 @@ parser.on("data", async (line) => {
   } catch (err) {
     if (err.response) {
       console.error(
-        "❌ API ERROR:",
+        "API ERROR:",
         err.response.status,
         err.response.data
       );
