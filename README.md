@@ -77,4 +77,4 @@ npm run start
 Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
 
 ### Author
-Owen M. Jerusalem
+<em>Owen M. Jerusalem </em>
