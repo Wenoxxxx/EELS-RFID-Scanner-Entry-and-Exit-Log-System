@@ -11,10 +11,13 @@ import "./Reports.css";
 const API_URL = import.meta.env.VITE_API_URL + "/logs";
 
 // =============================
-// TODAY (YYYY-MM-DD)
+// TODAY (YYYY-MM-DD) — LOCAL TIMEZONE
 // =============================
-const getToday = () =>
-  new Date().toISOString().split("T")[0];
+const getToday = () => {
+  const dt = new Date();
+  // Use local timezone, format YYYY-MM-DD
+  return dt.toLocaleDateString("en-CA"); 
+};
 
 export default function Reports() {
   const [logs, setLogs] = useState([]);
@@ -57,11 +60,13 @@ export default function Reports() {
     return {
       name: log.name,
       status: log.status,
+      // Local time in PH timezone
       time: dt.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit"
       }),
-      date: dt.toISOString().split("T")[0]
+      // Local date in PH timezone
+      date: dt.toLocaleDateString("en-CA")
     };
   });
 
