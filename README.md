@@ -59,9 +59,11 @@ npm run start
 ```
 <em><strong>NOTE: Without RFID (IoT) will result as an error for the backend to fetch data.</strong></em>
 
+
 ### 4. IoT Prototype
 - Connect RFID scanner to microcontroller.
 - Upload firmware to handle card scanning and communication with backend.
+
 
 ### Usage
 - Launch the frontend to access the dashboard.
@@ -69,12 +71,15 @@ npm run start
 - Logs will automatically update in the system.
 - Can export summary logs within specific date selected.
 
+
 ### Future Enhancements
 - Role-based access control (Admin, User).
 - Cloud deployment for scalability.
 
+
 ### Contributing
 Contributions are welcome! Please fork the repository and submit a pull request with your improvements.
+
 
 ### Author
 <em>Owen M. Jerusalem </em>
