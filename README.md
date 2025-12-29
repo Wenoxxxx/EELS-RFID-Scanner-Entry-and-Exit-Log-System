@@ -18,7 +18,6 @@ EELS (Entry and Exit Log System) is a modern access logging platform designed to
 
 ### IoT Prototype
 - RFID scanner integration for physical access control
-- Registered card validation (Step 3 setup)
 - Tested using Arduino / ESP32 hardware
 - Real-time data transmission to backend
 
@@ -58,12 +57,11 @@ cd backend
 npm install
 npm run start
 ```
-
+<em><strong>NOTE: Without RFID (IoT) will result as an error for the backend to fetch data.</strong></em>
 
 ### 4. IoT Prototype
 - Connect RFID scanner to microcontroller.
 - Upload firmware to handle card scanning and communication with backend.
-- Register authorized cards in Step 3 of the setup process.
 
 ### Usage
 - Launch the frontend to access the dashboard.
