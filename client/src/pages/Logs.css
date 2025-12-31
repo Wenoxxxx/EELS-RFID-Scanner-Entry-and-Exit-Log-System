@@ -21,7 +21,6 @@
   text-align: center;
 }
 
-/* ACTIONS CELL */
 .actions {
   width: 120px;
   display: flex;
@@ -71,15 +70,23 @@
 
 /* ================= FILTER LABEL ================= */
 .logs-filter-label {
-  margin: 6px 0 12px;
-  font-size: 14px;
-  font-weight: 600;
+  margin: 6px 0 14px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   color: #6b7280;
 }
 
-/* Highlight active label */
-.logs-filter-label .active-label {
-  color: #111827;
+.logs-filter-label.in {
+  color: #16a34a;
+}
+
+.logs-filter-label.out {
+  color: #dc2626;
+}
+
+.logs-filter-label.summary {
+  color: #4f46e5;
 }
 
 /* ================= LOGS ACTION BAR ================= */
@@ -107,14 +114,9 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-/* Default (inactive via routing) */
-.btn-scan {
   opacity: 0.4;
 }
 
-/* ACTIVE STATES (via NavLink) */
 .btn-scan.in.active {
   background: #22c55e;
   color: white;
@@ -142,31 +144,99 @@
   color: #111827;
 }
 
-/* Active summary */
 .btn-summary.active {
   background: #6366f1;
   color: white;
 }
 
-
-/* ================= CURRENT VIEW LABEL ================= */
-.logs-filter-label {
-  margin: 6px 0 14px;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #6b7280;
+/* ================= CONFIRM DIALOG ================= */
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
 }
 
-/* Color accents per view */
-.logs-filter-label.in {
-  color: #16a34a; /* green */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.logs-filter-label.out {
-  color: #dc2626; /* red */
+.confirm-box {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  max-width: 320px;
+  text-align: center;
 }
 
-.logs-filter-label.summary {
-  color: #4f46e5; /* indigo */
+.confirm-box p {
+  margin-bottom: 16px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.confirm-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* ================= BUTTONS ================= */
+.btn-confirm-edit,
+.btn-confirm-delete,
+.btn-save,
+.btn-cancel {
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  font-size: 14px;
+}
+
+/* EDIT CONFIRM (blue) */
+.btn-confirm-edit {
+  background: #3b82f6;
+  color: white;
+}
+.btn-confirm-edit:hover {
+  background: #2563eb;
+}
+
+/* DELETE CONFIRM (red) */
+.btn-confirm-delete {
+  background: #dc2626;
+  color: white;
+}
+.btn-confirm-delete:hover {
+  background: #b91c1c;
+}
+
+/* SAVE BUTTON */
+.btn-save {
+  background: #3b82f6;
+  color: white;
+}
+.btn-save:hover {
+  background: #2563eb;
+}
+
+/* CANCEL BUTTON (shared) */
+.btn-cancel {
+  background: #f3f4f6;
+  color: #111827;
+}
+.btn-cancel:hover {
+  background: #e5e7eb;
 }
