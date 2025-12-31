@@ -62,14 +62,3 @@ serial/*.txt
 # ======================
 .DS_Store
 Thumbs.db
-
-
-# ======================
-# DB
-# ======================
-DB_USER=eels
-DB_PASS=eels_db@26
-DB_HOST=localhost
-DB_NAME=eels-logs
-
-db.js
