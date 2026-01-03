@@ -3,10 +3,9 @@ const { ReadlineParser } = require("@serialport/parser-readline");
 const axios = require("axios");
 
 // ======================
-// CONFIG: SET SCAN MODE
+// CONFIG: API BASE
 // ======================
-// Change this to "OUT" when using Scan OUT
-const SCAN_MODE = "IN"; // "IN" | "OUT"
+const API_BASE = "http://localhost:3000/api/logs";
 
 // ======================
 // SERIAL PORT SETUP
@@ -18,7 +17,25 @@ const port = new SerialPort({
 
 const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
-console.log(`📡 Listening to Arduino on COM5 (MODE: ${SCAN_MODE})...`);
+console.log(`📡 Listening to Arduino on COM5...`);
+console.log(`🔄 Scan mode will be fetched from frontend buttons`);
+
+// ======================
+// GET CURRENT SCAN MODE FROM BACKEND
+// ======================
+const getCurrentMode = async () => {
+  try {
+    const res = await axios.get(`${API_BASE}/mode`);
+    currentScanMode = res.data.mode;
+    return currentScanMode;
+  } catch (err) {
+    console.error("Failed to fetch mode:", err.message);
+    return currentScanMode; // fallback to last known mode
+  }
+};
+
+// Store the current mode that the backend tells us
+let currentScanMode = "IN";
 
 // ======================
 // HANDLE RFID DATA
@@ -31,15 +48,18 @@ parser.on("data", async (line) => {
   console.log("📥 RFID UID:", uid);
 
   try {
+    // Get the current mode from backend
+    const mode = await getCurrentMode();
+    
     const res = await axios.post(
-      "http://localhost:3000/api/logs/rfid/scan",
+      `${API_BASE}/rfid/scan`,
       {
         uid,
-        mode: SCAN_MODE, // EXPLICIT MODE
+        mode, // Let backend know what mode we're using
       }
     );
 
-    console.log(`✅ RFID ${SCAN_MODE} SAVED:`, res.data);
+    console.log(`✅ RFID ${mode} SAVED:`, res.data);
   } catch (err) {
     if (err.response) {
       console.error(
