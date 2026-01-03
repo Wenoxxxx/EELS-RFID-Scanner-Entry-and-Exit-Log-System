@@ -25,12 +25,12 @@ export default function Reports() {
   const [loading, setLoading] = useState(false);
 
   // =============================
-  // FETCH LOGS (SAME AS LOGS PAGE)
+  // FETCH LOGS (WITH DATE FILTER)
   // =============================
-  const fetchLogs = async () => {
+  const fetchLogs = async (selectedDate) => {
     try {
       setLoading(true);
-      const res = await fetch(API_URL);
+      const res = await fetch(`${API_URL}?date=${selectedDate}`);
       if (!res.ok) throw new Error("Failed to fetch logs");
       const data = await res.json();
       setLogs(data);
@@ -42,14 +42,17 @@ export default function Reports() {
   };
 
   // =============================
-  // REALTIME POLLING
+  // REALTIME POLLING & DATE FILTER
   // =============================
   useEffect(() => {
-    fetchLogs(); // initial load
+    fetchLogs(date); // fetch on date change
 
-    const interval = setInterval(fetchLogs, 2000);
-    return () => clearInterval(interval);
-  }, []);
+    // Only poll if viewing today's data
+    if (date === getToday()) {
+      const interval = setInterval(() => fetchLogs(date), 2000);
+      return () => clearInterval(interval);
+    }
+  }, [date]);
 
   // =============================
   // NORMALIZE BACKEND DATA
