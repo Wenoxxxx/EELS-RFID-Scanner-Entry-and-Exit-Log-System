@@ -14,5 +14,6 @@ router.get("/mode", logsController.getMode);       // GET current scan mode
 
 router.post("/mode", validateMode, logsController.setMode); // Set scan mode
 router.post("/rfid/scan", logsController.rfidScan);         // RFID scan
+router.delete("/:id", logsController.deleteLog); // DELETE a log by id
 
 module.exports = router;
