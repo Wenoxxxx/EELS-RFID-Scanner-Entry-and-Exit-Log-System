@@ -57,25 +57,55 @@ exports.getOutLogs = (req, res) => {
 
 // =============================
 // SUMMARY (with optional date filter)
+// - If query `date=all` is provided, return totals across the whole DB
+// - Otherwise default to today's date (existing behavior)
 // =============================
 exports.getSummary = (req, res) => {
   const { date } = req.query;
+
+  // Overall totals across all rows
+  if (date === "all") {
+    db.query(
+      `SELECT 
+        SUM(status = 'IN') AS totalEntries,
+        SUM(status = 'OUT') AS totalExits,
+        COUNT(DISTINCT name) AS totalAttendees
+       FROM logs`,
+      (err, results) => {
+        if (err) return res.status(500).json(err);
+        const row = results[0] || {};
+        const totalEntries = Number(row.totalEntries) || 0;
+        const totalExits = Number(row.totalExits) || 0;
+        const totalAttendees = Number(row.totalAttendees) || 0;
+        res.json({
+          totalEntries,
+          totalExits,
+          totalAttendees,
+        });
+      }
+    );
+    return;
+  }
+
   const targetDate = date || getToday();
-  
   db.query(
     `SELECT 
       SUM(status = 'IN') AS totalEntries,
-      SUM(status = 'OUT') AS totalExits
+      SUM(status = 'OUT') AS totalExits,
+      COUNT(DISTINCT name) AS totalAttendees
      FROM logs
      WHERE DATE(time) = ?`,
     [targetDate],
     (err, results) => {
       if (err) return res.status(500).json(err);
-      const { totalEntries, totalExits } = results[0];
+      const row = results[0] || {};
+      const totalEntries = Number(row.totalEntries) || 0;
+      const totalExits = Number(row.totalExits) || 0;
+      const totalAttendees = Number(row.totalAttendees) || 0;
       res.json({
         totalEntries,
         totalExits,
-        totalAttendees: totalEntries - totalExits,
+        totalAttendees,
       });
     }
   );
