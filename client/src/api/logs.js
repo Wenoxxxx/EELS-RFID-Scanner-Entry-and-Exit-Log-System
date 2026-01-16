@@ -1,3 +1,5 @@
+export const getWeeklyLogs = () =>
+  axios.get(`${API_BASE}/logs/weekly`);
 import axios from "axios";
 
 const API_BASE = import.meta.env.VITE_API_URL || ""; // e.g. http://localhost:3000/api

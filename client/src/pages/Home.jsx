@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import StatCard from '../components/dashboard/StatCard';
-import WeeklyLineChart from '../components/dashboard/DashboardLineChart'; 
+import WeeklyLineChart from '../components/dashboard/WeeklyLineChart'; 
 import { getSummary } from '../api/logs';
 
 export default function Home() {
@@ -60,7 +60,11 @@ export default function Home() {
                 />
             </div>
 
-            <WeeklyLineChart />
+            {/* ...existing code... */}
+            <div className="dashboard-chart-section">
+                <h2 className="chart-section-title">Weekly Activity Overview</h2>
+                <WeeklyLineChart />
+            </div>
         </div>
     );
 }

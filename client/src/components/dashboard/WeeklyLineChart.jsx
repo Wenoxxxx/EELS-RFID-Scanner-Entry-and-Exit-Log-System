@@ -8,26 +8,44 @@ import {
   Tooltip,
   ResponsiveContainer
 } from "recharts";
+import { useEffect, useState } from "react";
+import { getWeeklyLogs } from "../../api/logs";
 
-// Weekly activity data
-const weeklyData = [
-  { day: "Mon", Total: 120 },
-  { day: "Tue", Total: 210 },
-  { day: "Wed", Total: 180 },
-  { day: "Thu", Total: 260 },
-  { day: "Fri", Total: 300 },
-  { day: "Sat", Total: 220 },
-  { day: "Sun", Total: 150 },
-];
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export default function WeeklyLineChart() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const res = await getWeeklyLogs();
+        // Map backend dates to day names
+        const formatted = res.data.map(d => ({
+          day: dayNames[new Date(d.date).getDay()],
+          Total: d.total,
+          In: d.inCount,
+          Out: d.outCount,
+        }));
+        setData(formatted);
+      } catch (err) {
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="weekly-line-chart">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={weeklyData}>
+        <LineChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="day" />
-          <YAxis />
+          <YAxis allowDecimals={false} />
           <Tooltip />
           <Line
             type="monotone"
@@ -36,9 +54,27 @@ export default function WeeklyLineChart() {
             strokeWidth={3}
             dot={{ r: 5 }}
             activeDot={{ r: 7 }}
+            name="Total Scans"
+          />
+          <Line
+            type="monotone"
+            dataKey="In"
+            stroke="#4ade80"
+            strokeWidth={2}
+            dot={false}
+            name="IN"
+          />
+          <Line
+            type="monotone"
+            dataKey="Out"
+            stroke="#f87171"
+            strokeWidth={2}
+            dot={false}
+            name="OUT"
           />
         </LineChart>
       </ResponsiveContainer>
+      {loading && <div style={{textAlign:'center',marginTop:8}}>Loading...</div>}
     </div>
   );
 }
