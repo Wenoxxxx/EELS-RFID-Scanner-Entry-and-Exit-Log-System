@@ -58,6 +58,17 @@ npm install
 npm run start
 ```
 <em><strong>NOTE: Without RFID (IoT) will result as an error for the backend to fetch data.</strong></em>
+<em><strong>TIPS: Create a db and use this command below if IoT is unavailable for testing purposes.</strong></em>
+
+```bash
+    CREATE TABLE IF NOT EXISTS logs (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        rfid_tag VARCHAR(50) NOT NULL,
+        scan_time DATETIME NOT NULL,
+        status ENUM('IN', 'OUT') NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+```
 
 
 ### 4. IoT Prototype
