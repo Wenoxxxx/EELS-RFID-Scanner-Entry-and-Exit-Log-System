@@ -1,3 +1,38 @@
+// =============================
+// GET weekly logs (daily counts for last 7 days)
+// =============================
+exports.getWeeklyLogs = (req, res) => {
+  db.query(
+    `SELECT DATE(time) as date, COUNT(*) as total, 
+            SUM(status = 'IN') as inCount, 
+            SUM(status = 'OUT') as outCount
+     FROM logs
+     WHERE time >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+     GROUP BY DATE(time)
+     ORDER BY date ASC`,
+    (err, results) => {
+      if (err) return res.status(500).json(err);
+      // Fill missing days with zeroes
+      const days = [];
+      const today = new Date();
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        days.push(d.toISOString().slice(0, 10));
+      }
+      const data = days.map(date => {
+        const found = results.find(r => r.date === date);
+        return {
+          date,
+          total: found ? found.total : 0,
+          inCount: found ? found.inCount : 0,
+          outCount: found ? found.outCount : 0,
+        };
+      });
+      res.json(data);
+    }
+  );
+};
 const db = require("../db");
 
 let currentScanMode = "IN";
