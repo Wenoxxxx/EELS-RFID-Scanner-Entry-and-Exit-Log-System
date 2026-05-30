@@ -1,103 +1,51 @@
-/* ===============================
-   GLOBAL RESET & BASE STYLES
-   =============================== */
+@import "tailwindcss";
 
-:root {
-  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont,
-             'Segoe UI', Helvetica, Arial, sans-serif;
+@theme {
+  --font-body: "Poppins", sans-serif;
+  --font-display: "Outfit", sans-serif;
+  
+  --color-brand-purple: #7c3aed;
+  --color-brand-hover: #5b21b6;
+  --color-brand-light: #f3e8ff;
+  --color-brand-dark: #4c1d95;
 
-  line-height: 1.5;
-  font-weight: 400;
+  --color-in-green: #10b981;
+  --color-out-orange: #f97316;
+  --color-attendees-purple: #8b5cf6;
+  --color-neutral-bg: #ffffff;
+  --color-border-soft: #e2e8f0;
+}
 
-  /* App-wide colors */
-  --bg-color: #ffffff;
-  --text-color: #1a1a1a;
-  --accent-color: #0b0481;
-
-  color-scheme: light;
-  color: var(--text-color);
-  background-color: var(--bg-color);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+/* Base Styles */
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-neutral-bg);
+  color: #000000;
+  min-height: 100vh;
+  margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* ===============================
-   HTML / BODY
-   =============================== */
-
-* {
-  box-sizing: border-box;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
 }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background-color: var(--bg-color);
-  color: var(--text-color);
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-#root {
-  width: 100%;
-  height: 100%;
+::-webkit-scrollbar-track {
+  background: #ffffff;
 }
 
-/* ===============================
-   TYPOGRAPHY
-   =============================== */
-
-h1 {
-  font-size: 1.4rem;
-  line-height: 1.2;
-  margin: 0;
-  color: inherit;
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
 }
 
-p {
-  margin: 0;
-}
-
-/* ===============================
-   LINKS
-   =============================== */
-
-a {
-  font-weight: 500;
-  color: inherit;
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--accent-color);
-}
-
-/* ===============================
-   BUTTONS
-   =============================== */
-
-button {
-  border-radius: 8px;
-  border: none;
-  padding: 0.6em 1.2em;
-  font-size: 0.95rem;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1f1f1f;
-  color: #ffffff;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
-}
-
-button:hover {
-  background-color: #2a2a2a;
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-button:focus-visible {
-  outline: 2px solid var(--accent-color);
+::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
 }

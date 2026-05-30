@@ -2,11 +2,10 @@ import { useEffect, useState } from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 
+import StatCard from "../components/dashboard/StatCard";
 import WeeklyLineChart from "../components/dashboard/WeeklyLineChart";
 import DailySummary from "../components/reports/DailySummary";
 import DailyTimeline from "../components/reports/DailyTimeline";
-
-import "./Reports.css";
 
 const API_URL = import.meta.env.VITE_API_URL + "/logs";
 
@@ -23,13 +22,18 @@ export default function Reports() {
   const [logs, setLogs] = useState([]);
   const [date, setDate] = useState(getToday());
   const [loading, setLoading] = useState(false);
+  const [syncing, setSyncing] = useState(false);
 
   // =============================
   // FETCH LOGS (WITH DATE FILTER)
   // =============================
-  const fetchLogs = async (selectedDate) => {
+  const fetchLogs = async (selectedDate, showLoader = false) => {
     try {
-      setLoading(true);
+      if (showLoader) {
+        setLoading(true);
+      } else {
+        setSyncing(true);
+      }
       const res = await fetch(`${API_URL}?date=${selectedDate}`);
       if (!res.ok) throw new Error("Failed to fetch logs");
       const data = await res.json();
@@ -37,7 +41,11 @@ export default function Reports() {
     } catch (err) {
       console.error("Reports API Error:", err.message);
     } finally {
-      setLoading(false);
+      if (showLoader) {
+        setLoading(false);
+      } else {
+        setSyncing(false);
+      }
     }
   };
 
@@ -45,11 +53,11 @@ export default function Reports() {
   // REALTIME POLLING & DATE FILTER
   // =============================
   useEffect(() => {
-    fetchLogs(date); // fetch on date change
+    fetchLogs(date, true); // fetch on date change with loader
 
     // Only poll if viewing today's data
     if (date === getToday()) {
-      const interval = setInterval(() => fetchLogs(date), 2000);
+      const interval = setInterval(() => fetchLogs(date, false), 2000);
       return () => clearInterval(interval);
     }
   }, [date]);
@@ -106,73 +114,80 @@ export default function Reports() {
   // RENDER
   // =============================
   return (
-    <div className="reports-page">
+    <div className="flex flex-col gap-6">
 
       {/* HEADER */}
-      <div className="stats-header">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2">
         <div>
-          <h1>Reports</h1>
-          <p className="subtitle">Live & historical attendance data</p>
+          <h1 className="text-3xl font-extrabold text-black font-display tracking-tight">Reports</h1>
+          <p className="text-sm text-gray-500 mt-1">Live & historical attendance data</p>
         </div>
 
-        <div className="stats-controls">
-          {/* DATE FILTER (KEPT) */}
+        <div className="flex items-center gap-3">
+          {/* DATE FILTER */}
           <input
             type="date"
-            className="date-input"
+            className="h-10 px-3 rounded-lg border border-border-soft bg-white text-black font-body text-sm outline-none focus:border-brand-purple focus:shadow-[0_0_0_3px_rgba(124,58,237,0.1)] transition-all duration-200 cursor-pointer"
             value={date}
             onChange={e => setDate(e.target.value)}
           />
 
-          <button className="btn-eels" onClick={downloadPDF}>
+          <button 
+            className="h-10 px-4 rounded-lg font-semibold text-sm bg-brand-purple hover:bg-brand-hover text-white transition-all duration-200 cursor-pointer" 
+            onClick={downloadPDF}
+          >
             Download PDF
           </button>
         </div>
       </div>
 
       {/* SUMMARY */}
-      <div className="date-summary">
-        <p className="selected-date">
-          Showing logs for <strong>{date}</strong>
+      <div className="flex flex-col gap-4">
+        <p className="text-xs font-bold tracking-widest uppercase text-brand-purple">
+          Showing logs for <span className="text-black font-extrabold">{date}</span>
           {date === getToday() && " (Live)"}
         </p>
 
-        <div className="stats-grid">
-          <div className="stat-card green">
-            <p>Total Entries</p>
-            <h3>{totalEntries}</h3>
-          </div>
-
-          <div className="stat-card orange">
-            <p>Total Exits</p>
-            <h3>{totalExits}</h3>
-          </div>
-
-          <div className="stat-card purple">
-            <p>Total Attendees</p>
-            <h3>{totalAttendees}</h3>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <StatCard
+            title="Total Entries"
+            value={loading ? "—" : totalEntries}
+            variant="entries"
+            description="Total check-ins on this date."
+          />
+          <StatCard
+            title="Total Exits"
+            value={loading ? "—" : totalExits}
+            variant="exits"
+            description="Total check-outs on this date."
+          />
+          <StatCard
+            title="Total Attendees"
+            value={loading ? "—" : totalAttendees}
+            variant="attendees"
+            description="Unique attendees in the logs on this date."
+          />
         </div>
       </div>
 
       {/* WEEKLY + DAILY */}
-      <div className="reports-grid">
-        <div className="report-card">
-          <h4 className="card-title">Weekly Activity Overview</h4>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-2">
+        <div className="bg-white p-7 rounded-xl border border-border-soft shadow-sm flex flex-col">
+          <h4 className="text-lg font-bold text-black font-display mb-4">Weekly Activity Overview</h4>
           <WeeklyLineChart />
         </div>
 
-        <div className="report-card">
+        <div className="bg-white p-7 rounded-xl border border-border-soft shadow-sm flex flex-col">
           <DailySummary logs={filteredLogs} date={date} />
         </div>
       </div>
 
       {/* TIMELINE */}
-      <div className="report-card full-width">
+      <div className="bg-white p-7 rounded-xl border border-border-soft shadow-sm mt-2">
         <DailyTimeline logs={filteredLogs} />
 
-        {loading && date === getToday() && (
-          <p style={{ marginTop: 12 }}>
+        {syncing && date === getToday() && (
+          <p className="text-xs text-gray-500 mt-4 animate-pulse">
             Syncing live logs…
           </p>
         )}
@@ -180,4 +195,4 @@ export default function Reports() {
 
     </div>
   );
-}
+}

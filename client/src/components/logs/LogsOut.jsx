@@ -42,7 +42,13 @@ export default function LogsOut() {
 
   return (
     <>
-      {loading ? <p>Loading OUT logs...</p> : <LogsTable logs={logs} setLogs={setLogs} />}
+      {loading ? (
+        <div className="text-center py-10 text-sm text-gray-500 font-medium">
+          Loading check-out logs...
+        </div>
+      ) : (
+        <LogsTable logs={logs} setLogs={setLogs} />
+      )}
     </>
   );
 }

@@ -25,20 +25,20 @@ export default function LogsSummary() {
   }, []);
 
   return (
-    <div className="stats-grid">
-      <div className="card">
-        <p>Total Entries</p>
-        <h2>{summary.totalEntries}</h2>
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mt-4">
+      <div className="bg-white p-6 rounded-xl border border-border-soft shadow-sm border-l-4 border-l-in-green">
+        <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Total Entries</p>
+        <h2 className="text-3xl font-extrabold text-black font-display tracking-tight">{summary.totalEntries}</h2>
       </div>
 
-      <div className="card">
-        <p>Total Exits</p>
-        <h2>{summary.totalExits}</h2>
+      <div className="bg-white p-6 rounded-xl border border-border-soft shadow-sm border-l-4 border-l-out-orange">
+        <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Total Exits</p>
+        <h2 className="text-3xl font-extrabold text-black font-display tracking-tight">{summary.totalExits}</h2>
       </div>
 
-      <div className="card">
-        <p>Total Attendees</p>
-        <h2>{summary.totalAttendees}</h2>
+      <div className="bg-white p-6 rounded-xl border border-border-soft shadow-sm border-l-4 border-l-attendees-purple">
+        <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2">Total Attendees</p>
+        <h2 className="text-3xl font-extrabold text-black font-display tracking-tight">{summary.totalAttendees}</h2>
       </div>
     </div>
   );

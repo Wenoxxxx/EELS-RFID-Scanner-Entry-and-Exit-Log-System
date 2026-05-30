@@ -1,5 +1,5 @@
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import "./Logs.css";
+import { HiOutlineLogin, HiOutlineLogout, HiOutlineCollection } from "react-icons/hi";
 import { setScanMode } from "../api/rfid";
 
 // =============================
@@ -20,50 +20,76 @@ export default function Logs() {
     ? "OUT"
     : "SUMMARY";
 
+  const btnClassIn = ({ isActive }) => 
+    `h-10 px-4 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 border transition-all duration-200 ` +
+    (isActive 
+      ? "bg-in-green border-in-green text-white" 
+      : "border-border-soft bg-white text-gray-500 hover:bg-gray-50 hover:text-black");
+
+  const btnClassOut = ({ isActive }) => 
+    `h-10 px-4 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 border transition-all duration-200 ` +
+    (isActive 
+      ? "bg-out-orange border-out-orange text-white" 
+      : "border-border-soft bg-white text-gray-500 hover:bg-gray-50 hover:text-black");
+
+  const btnClassSummary = ({ isActive }) => 
+    `h-10 px-4 rounded-lg font-semibold text-sm flex items-center justify-center gap-2 border transition-all duration-200 ` +
+    (isActive 
+      ? "bg-brand-purple border-brand-purple text-white" 
+      : "border-border-soft bg-white text-gray-500 hover:bg-gray-50 hover:text-black");
+
+  const getFilterLabelClass = () => {
+    switch (currentView) {
+      case "IN":
+        return "text-in-green";
+      case "OUT":
+        return "text-out-orange";
+      default:
+        return "text-brand-purple";
+    }
+  };
+
   return (
-    <div className="card">
-      <h1>Logs</h1>
+    <div className="bg-white p-8 rounded-xl border border-border-soft shadow-sm relative">
+      <h1 className="text-2xl font-extrabold text-black font-display tracking-tight">Logs</h1>
       {/* Subtitle now includes current day */}
-      <p className="subtitle">
+      <p className="text-sm text-gray-500 mt-1 mb-8">
         Timeline scanner logs: {getToday()}
       </p>
 
       {/* NON-CLICKABLE STATUS LABEL */}
-      <p className={`logs-filter-label ${currentView.toLowerCase()}`}>
+      <p className={`text-xs font-bold tracking-widest uppercase mt-2 mb-4 ${getFilterLabelClass()}`}>
         SHOWING: {currentView} LOGS
       </p>
 
       {/* ACTION BAR */}
-      <div className="logs-actions">
-        <div className="scan-actions">
+      <div className="flex justify-between items-center my-6 gap-4">
+        <div className="flex gap-2">
           <NavLink
             to="in"
             onClick={() => setScanMode("IN")}
-            className={({ isActive }) =>
-              `btn-scan in ${isActive ? "active" : ""}`
-            }
+            className={btnClassIn}
           >
-            Scan IN
+            <HiOutlineLogin size={16} />
+            <span>Scan IN</span>
           </NavLink>
 
           <NavLink
             to="out"
             onClick={() => setScanMode("OUT")}
-            className={({ isActive }) =>
-              `btn-scan out ${isActive ? "active" : ""}`
-            }
+            className={btnClassOut}
           >
-            Scan OUT
+            <HiOutlineLogout size={16} />
+            <span>Scan OUT</span>
           </NavLink>
         </div>
 
         <NavLink
           to="summary"
-          className={({ isActive }) =>
-            `btn-summary ${isActive ? "active" : ""}`
-          }
+          className={btnClassSummary}
         >
-          Summary
+          <HiOutlineCollection size={16} />
+          <span>Summary View</span>
         </NavLink>
       </div>
 

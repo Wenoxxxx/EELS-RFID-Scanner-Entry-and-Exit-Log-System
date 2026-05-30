@@ -42,7 +42,13 @@ export default function LogsIn() {
 
   return (
     <>
-      {loading ? <p>Loading IN logs...</p> : <LogsTable logs={logs} setLogs={setLogs} />}
+      {loading ? (
+        <div className="text-center py-10 text-sm text-gray-500 font-medium">
+          Loading check-in logs...
+        </div>
+      ) : (
+        <LogsTable logs={logs} setLogs={setLogs} />
+      )}
     </>
   );
 }
