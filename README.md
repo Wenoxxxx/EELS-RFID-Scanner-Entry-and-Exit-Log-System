@@ -44,28 +44,28 @@ git clone https://github.com/your-username/EELS.git
 cd EELS
 ```
 
-### 2. Setup frontend
+### 2. Setup client (frontend)
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev
 ```
 
-### 3. Setup backend
+### 3. Setup server (backend)
 ```bash
-cd backend
+cd server
 npm install
-npm run start
+npm run dev
 ```
 <em><strong>NOTE: Without RFID (IoT) will result as an error for the backend to fetch data.</strong></em>
 <em><strong>TIPS: Create a db and use this command below if IoT is unavailable for testing purposes.</strong></em>
 
-```bash
+```sql
     CREATE TABLE IF NOT EXISTS logs (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        rfid_tag VARCHAR(50) NOT NULL,
-        scan_time DATETIME NOT NULL,
+        name VARCHAR(50) NOT NULL,
         status ENUM('IN', 'OUT') NOT NULL,
+        time DATETIME NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 ```

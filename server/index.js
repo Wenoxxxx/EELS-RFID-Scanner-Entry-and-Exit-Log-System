@@ -23,6 +23,12 @@ app.get("/health", (req, res) => {
 });
 
 // =====================
+// ERROR HANDLER
+// =====================
+const errorHandler = require("./middleware/errorHandler");
+app.use(errorHandler);
+
+// =====================
 // SERVER
 // =====================
 const PORT = 3000;

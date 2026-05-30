@@ -1,4 +1,5 @@
-const API_URL = "http://localhost:3000/api/logs";
+const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+const API_URL = `${API_BASE}/logs`;
 
 //  Called when user clicks Scan IN / Scan OUT
 export async function setScanMode(mode) {

@@ -26,9 +26,13 @@ Thumbs.db
 *.swp
 
 # Logs
-logs
+/logs
 *.log
 
 # Database files
 *.sqlite
 .db
+
+# Todo files containing credentials
+todo.txt
+

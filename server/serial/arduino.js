@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { SerialPort } = require("serialport");
 const { ReadlineParser } = require("@serialport/parser-readline");
 const axios = require("axios");
@@ -5,19 +6,22 @@ const axios = require("axios");
 // ======================
 // CONFIG: API BASE
 // ======================
-const API_BASE = "http://localhost:3000/api/logs";
+const API_BASE = process.env.API_BASE || "http://localhost:3000/api/logs";
 
 // ======================
 // SERIAL PORT SETUP
 // ======================
+const portPath = process.env.SERIAL_PORT || "COM5";
+const baudRate = Number(process.env.BAUD_RATE) || 9600;
+
 const port = new SerialPort({
-  path: "COM5",      // confirm in Device Manager
-  baudRate: 9600,
+  path: portPath,
+  baudRate: baudRate,
 });
 
 const parser = port.pipe(new ReadlineParser({ delimiter: "\n" }));
 
-console.log(`📡 Listening to Arduino on COM5...`);
+console.log(`📡 Listening to Arduino on ${portPath}...`);
 console.log(`🔄 Scan mode will be fetched from frontend buttons`);
 
 // ======================
